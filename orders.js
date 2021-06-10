@@ -12,7 +12,7 @@ module.exports = Router()
   })
   .put('/api/v1/orders/:id', async (req, res) => {
     try {
-      const order = await Order.update(req.params.quantity);
+      const order = await Order.update(req.body, req.params.id);
       res.send(order);
     } catch (err) {
       res.status(500).send(err);
@@ -20,7 +20,7 @@ module.exports = Router()
   })
   .get('/api/v1/orders', async (req, res) => {
     try {
-      const order = await Order.select(req.params.quantity);
+      const order = await Order.select();
       res.send(order);
     } catch (err) {
       res.status(500).send(err);
@@ -28,7 +28,7 @@ module.exports = Router()
   })
   .get('/api/v1/orders/:id', async (req, res) => {
     try {
-      const order = await Order.selectId(req.params.quantity);
+      const order = await Order.selectId(req.params.id);
       res.send(order);
     } catch (err) {
       res.status(500).send(err);
@@ -36,7 +36,7 @@ module.exports = Router()
   })
   .delete('/api/v1/orders/:id', async (req, res) => {
     try {
-      const order = await Order.delete(req.params.quantity);
+      const order = await Order.delete(req.params.id);
       res.send(order);
     } catch (err) {
       res.status(500).send(err);
