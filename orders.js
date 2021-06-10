@@ -13,7 +13,15 @@ module.exports = Router() // app.post(....)
   })
   .put('/api/v1/orders/:id', async (req, res) => {
     try {
-      const order = await Order.insert(req.params.quantity);
+      const order = await Order.update(req.params.quantity);
+      res.send(order);
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  })
+  .get('/api/v1/orders', async (req, res) => {
+    try {
+      const order = await Order.select(req.params.quantity);
       res.send(order);
     } catch (err) {
       res.status(500).send(err);
@@ -21,7 +29,7 @@ module.exports = Router() // app.post(....)
   })
   .get('/api/v1/orders/:id', async (req, res) => {
     try {
-      const order = await Order.insert(req.params.quantity);
+      const order = await Order.selectId(req.params.quantity);
       res.send(order);
     } catch (err) {
       res.status(500).send(err);
@@ -29,7 +37,7 @@ module.exports = Router() // app.post(....)
   })
   .delete('/api/v1/orders/:id', async (req, res) => {
     try {
-      const order = await Order.insert(req.params.quantity);
+      const order = await Order.delete(req.params.quantity);
       res.send(order);
     } catch (err) {
       res.status(500).send(err);
