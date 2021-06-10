@@ -29,8 +29,8 @@ class Order {
   static async update(quantityOfItems, id) {
     const { rows } = await pool.query(
       `UPDATE orders
-      SET (quantity_of_items)
-      WHERE ID = $1
+      SET (quantity_of_items) = $1
+      WHERE ID = $2
       RETURNING *
       `,
       [quantityOfItems, id]
@@ -49,7 +49,6 @@ class Order {
       `SELECT id, quantity
       FROM orders
       WHERE id = $1
-      RETURNING
       `,
       [id]);
     return new Order(rows[0] || null);
