@@ -41,7 +41,6 @@ class Order {
     const { rows } = await pool.query(
       `SELECT *
       FROM orders
-      
       `);
     return new Order(rows);
   }
@@ -51,8 +50,19 @@ class Order {
       FROM orders
       WHERE id = $1
       RETURNING
-      `, [id]);
+      `,
+      [id]);
     return new Order(rows[0] || null);
+  }
+  static async delete(id) {
+    const { rows } = await pool.query(
+      `DELETE FROM orders
+      WHERE id = $1
+      RETURNING *
+      `,
+      [id]
+    );
+    return new Order(rows[0]);
   }
 }
 
