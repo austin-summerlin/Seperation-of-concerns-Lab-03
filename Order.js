@@ -37,6 +37,23 @@ class Order {
     );
     return new Order(rows[0]);
   }
+  static async select() {
+    const { rows } = await pool.query(
+      `SELECT *
+      FROM orders
+      
+      `);
+    return new Order(rows);
+  }
+  static async selectId(id) {
+    const { rows } = await pool.query(
+      `SELECT id, quantity
+      FROM orders
+      WHERE id = $1
+      RETURNING
+      `, [id]);
+    return new Order(rows[0] || null);
+  }
 }
 
 module.exports = Order;
