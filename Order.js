@@ -15,12 +15,26 @@ class Order {
   // instance method
   static async insert(quantityOfItems) {
     const { rows } = await pool.query(
-      'INSERT INTO orders (quantity_of_items) VALUES ($1) RETURNING *',
+      `INSERT INTO orders(quantity_of_items) 
+      VALUES($1) 
+      RETURNING *
+      `,
       [quantityOfItems]
     );
 
     // rows = [{ id: '1', quantity_of_items: 10 }]
     // { id: '1', quantityOfItems: 10 }
+    return new Order(rows[0]);
+  }
+  static async update(quantityOfItems, id) {
+    const { rows } = await pool.query(
+      `UPDATE orders
+      SET (quantity_of_items)
+      WHERE ID = $1
+      RETURNING *
+      `,
+      [quantityOfItems, id]
+    );
     return new Order(rows[0]);
   }
 }
